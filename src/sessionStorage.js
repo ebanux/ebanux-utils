@@ -42,6 +42,20 @@ class Session {
     );
   }
 
+  get oauthUrl() {
+    return this.get(
+      'OAUTH_URL',
+      process.env.OAUTH_URL || process.env.REACT_APP_OAUTH_URL,
+    );
+  }
+
+  get oauthScope() {
+    return this.get(
+      'OAUTH_SCOPE',
+      process.env.OAUTH_SCOPE || process.env.REACT_APP_OAUTH_SCOPE,
+    );
+  }
+
   set appClientId(value) {
     this.set('APP_CLIENT_ID', value);
   }
@@ -52,6 +66,14 @@ class Session {
 
   set oauthTokenUrl(value) {
     this.set('OAUTH_TOKEN_URL', value);
+  }
+
+  set oauthUrl(value) {
+    this.set('OAUTH_URL', value);
+  }
+
+  set oauthScope(value) {
+    this.set('OAUTH_SCOPE', value);
   }
 
   get(key, defaultValue) {

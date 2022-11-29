@@ -1,9 +1,8 @@
 import axios from 'axios';
 import session from './sessionStorage';
+import { toQueryParams } from './request';
 
-export const { serverBaseUrl } = session;
-
-axios.defaults.baseURL = serverBaseUrl;
+axios.defaults.baseURL = session.serverBaseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
@@ -42,4 +41,11 @@ export function authWithAuthCode(authCode) {
   });
 }
 
-
+export function startAuthorizationFlow() {
+  const data = {
+    redirect_uri: session.appBaseUrl,
+    client_id: session.appClientId,
+    scope: session.authorizationScope,
+  };
+  window.location.href = `${session.authorizacionUrl}?${toQueryParams(data)}`;
+}
