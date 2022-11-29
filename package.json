@@ -1,0 +1,24 @@
+{
+  "name": "ebanux-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebanux/ebanux-utils.git"
+  },
+  "author": "yoandrypa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ebanux/ebanux-utils/issues"
+  },
+  "homepage": "https://github.com/ebanux/ebanux-utils#readme",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "axios-token-interceptor": "^0.2.0",
+    "fbemitter": "^3.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "ebanux-utils/utils",
+  "main": "../src/utils.js",
+  "module": "../src/utils.js",
+  "sideEffects": false
+}

@@ -1,0 +1,6 @@
+{
+  "name": "ebanux-utils/auth",
+  "main": "../src/auth.js",
+  "module": "../src/auth.js",
+  "sideEffects": false
+}
