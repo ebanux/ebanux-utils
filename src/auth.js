@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import session from './sessionStorage';
 import { toQueryParams } from './request';
@@ -47,5 +48,5 @@ export function startAuthorizationFlow() {
     client_id: session.appClientId,
     scope: session.authorizationScope,
   };
-  window.location.href = `${session.authorizacionUrl}?${toQueryParams(data)}`;
+  window.location.href = `${session.oauthUrl}?${toQueryParams(data)}`;
 }
