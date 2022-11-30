@@ -16,7 +16,7 @@ class Session {
   }
 
   get apiBaseUrl() {
-    return `${this.serverBaseUrl}/${this.apiBasePath}`;
+    return `${this.serverBaseUrl}/${this.apiBasePath || ''}`;
   }
 
   get appBaseUrl() {
