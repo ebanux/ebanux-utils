@@ -27,7 +27,8 @@ export function getOrRefreshToken() {
 
       return response.data;
     }).catch((err) => {
-      session.clear();
+      session.del('credentials');
+      session.del('account');
       const message = err.response ? err.response.data.message : err.message;
       throw Error(message);
     });
