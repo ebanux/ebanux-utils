@@ -5,12 +5,8 @@ import session from './sessionStorage';
 import { isObject } from './utils';
 import { getOrRefreshToken } from './auth';
 
-let axiosInstance = null;
-
-const getAxiosInstance = () => {
-  let { axiosInstance } = session;
-
-  if (axiosInstance) return axiosInstance;
+export function createAxiosInstance() {
+  let axiosInstance;
 
   axios.defaults.baseURL = session.apiBaseUrl;
   axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -25,8 +21,6 @@ const getAxiosInstance = () => {
       headerFormatter: (response) => `Bearer ${response.id_token}`,
     }),
   );
-
-  session.axiosInstance = axiosInstance;
 
   return axiosInstance;
 };
@@ -62,11 +56,11 @@ export function toQueryParams(requestData) {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export function request(options = {}) {
-  axiosInstance = getAxiosInstance();
+  session.axiosInstance ||= createAxiosInstance();
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
 
-  return axiosInstance(options)
+  return session.axiosInstance(options)
     .then((response) => response.data)
     .catch((err) => {
       const message = err.response ? err.response.data.message : err.message;
