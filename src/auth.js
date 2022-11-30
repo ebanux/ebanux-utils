@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import session from './sessionStorage';
 import { toQueryParams } from './request';
@@ -26,7 +27,7 @@ export function getOrRefreshToken() {
 
       return response.data;
     }).catch((err) => {
-      // session.clear();
+      session.clear();
       const message = err.response ? err.response.data.message : err.message;
       throw Error(message);
     });
@@ -47,5 +48,23 @@ export function startAuthorizationFlow() {
     client_id: session.appClientId,
     scope: session.authorizationScope,
   };
-  window.location.href = `${session.authorizacionUrl}?${toQueryParams(data)}`;
+  window.location.href = `${session.oauthUrl}?${toQueryParams(data)}`;
+}
+
+export function injectAuthenticationFlow(WrappedComponent) {
+  return (props) => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has('code')) {
+      const authCode = urlParams.get('code');
+      authWithAuthCode(authCode);
+      window.location.href = `${session.appBaseUrl}`;
+    } else if (!session.isAuthenticate) {
+      startAuthorizationFlow();
+    } else {
+      return React.createElement(WrappedComponent, props);
+    }
+
+    return React.createElement('div', {}, 'Authenticating...');
+  }
 }

@@ -1,12 +1,14 @@
 import LZString from 'lz-string';
 
 class Session {
+  _axiosInstance = null;
+
   get currentAccount() {
     return this.get('account');
   }
 
   get isAuthenticate() {
-    return !!this.currentAccount;
+    return !!this.get('credentials');
   }
 
   get serverBaseUrl() {
@@ -38,14 +40,14 @@ class Session {
   get oauthTokenUrl() {
     return this.get(
       'OAUTH_TOKEN_URL',
-      process.env.OAUTH_TOKEN_URL || process.env.REACT_APP_OAUTH_TOKEN_URL,
+      process.env.OAUTH_TOKEN_URL || process.env.REACT_APP_OAUTH_TOKEN_URL || `${this.apiBaseUrl}/oauth/token`,
     );
   }
 
   get oauthUrl() {
     return this.get(
       'OAUTH_URL',
-      process.env.OAUTH_URL || process.env.REACT_APP_OAUTH_URL,
+      process.env.OAUTH_URL || process.env.REACT_APP_OAUTH_URL || `${this.apiBaseUrl}/oauth/authorize`
     );
   }
 
@@ -56,11 +58,16 @@ class Session {
     );
   }
 
+  get axiosInstance(){
+    return this._axiosInstance;
+  }
+
   set appClientId(value) {
     this.set('APP_CLIENT_ID', value);
   }
 
   set apiBasePath(value) {
+    this.axiosInstance = undefined;
     this.set('API_BASE_PATH', value);
   }
 
@@ -74,6 +81,10 @@ class Session {
 
   set oauthScope(value) {
     this.set('OAUTH_SCOPE', value);
+  }
+
+  set axiosInstance(value){
+    this._axiosInstance = value;
   }
 
   get(key, defaultValue) {

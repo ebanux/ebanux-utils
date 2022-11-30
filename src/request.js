@@ -5,14 +5,16 @@ import session from './sessionStorage';
 import { isObject } from './utils';
 import { getOrRefreshToken } from './auth';
 
-axios.defaults.baseURL = session.apiBaseUrl;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.put['Content-Type'] = 'application/json';
-
 let axiosInstance = null;
 
 const getAxiosInstance = () => {
+  let { axiosInstance } = session;
+
   if (axiosInstance) return axiosInstance;
+
+  axios.defaults.baseURL = session.apiBaseUrl;
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
+  axios.defaults.headers.put['Content-Type'] = 'application/json';
 
   axiosInstance = axios.create({ withCredentials: true });
   axiosInstance.interceptors.request.use(
@@ -24,6 +26,8 @@ const getAxiosInstance = () => {
     }),
   );
 
+  session.axiosInstance = axiosInstance;
+
   return axiosInstance;
 };
 
@@ -31,8 +35,7 @@ export function toQueryParams(requestData) {
   const qs = [];
   const add = (key, value) => {
     let v = typeof value === 'function' ? value() : value;
-    v = v === null || v === undefined ? '' : v;
-    qs[qs.length] = `${encodeURIComponent(key)}=${encodeURIComponent(v)}`;
+    if (v !== null && v !== undefined) qs[qs.length] = `${encodeURIComponent(key)}=${encodeURIComponent(v)}`;
   };
 
   const buildParams = (prefix, data) => {
