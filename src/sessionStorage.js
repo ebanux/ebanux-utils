@@ -58,7 +58,7 @@ class Session {
     );
   }
 
-  get axiosInstance(){
+  get axiosInstance() {
     return this._axiosInstance;
   }
 
@@ -83,7 +83,7 @@ class Session {
     this.set('OAUTH_SCOPE', value);
   }
 
-  set axiosInstance(value){
+  set axiosInstance(value) {
     this._axiosInstance = value;
   }
 
@@ -94,11 +94,7 @@ class Session {
   }
 
   set(key, value) {
-    try {
-      window.sessionStorage.setItem(LZString.compress(key), LZString.compress(JSON.stringify(value)));
-    } catch (e) {
-      window.sessionStorage.clear();
-    }
+    window.sessionStorage.setItem(LZString.compress(key), LZString.compress(JSON.stringify(value)));
   }
 
   del(key) {

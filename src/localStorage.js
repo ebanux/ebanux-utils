@@ -8,11 +8,7 @@ class Local {
   }
 
   set(key, value) {
-    try {
-      window.localStorage.setItem(LZString.compress(key), LZString.compress(JSON.stringify(value)));
-    } catch (e) {
-      window.localStorage.clear();
-    }
+    window.localStorage.setItem(LZString.compress(key), LZString.compress(JSON.stringify(value)));
   }
 
   del(key) {
