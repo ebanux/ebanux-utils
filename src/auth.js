@@ -46,7 +46,8 @@ export function startAuthorizationFlow() {
   const data = {
     redirect_uri: session.appBaseUrl,
     client_id: session.appClientId,
-    scope: session.authorizationScope,
+    scope: session.oauthScope,
+    response_type: 'code',
   };
   window.location.href = `${session.oauthUrl}?${toQueryParams(data)}`;
 }
