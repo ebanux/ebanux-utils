@@ -5,14 +5,13 @@ import session from './sessionStorage';
 import { isObject } from './utils';
 import { getOrRefreshToken } from './auth';
 
-export function createAxiosInstance() {
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.put['Content-Type'] = 'application/json';
+
+export function createAxiosInstance(apiBaseUrl = null) {
   let axiosInstance;
 
-  axios.defaults.baseURL = session.apiBaseUrl;
-  axios.defaults.headers.post['Content-Type'] = 'application/json';
-  axios.defaults.headers.put['Content-Type'] = 'application/json';
-
-  axiosInstance = axios.create({ withCredentials: true });
+  axiosInstance = axios.create({ withCredentials: true, baseURL: apiBaseUrl || session.apiBaseUrl });
   axiosInstance.interceptors.request.use(
     tokenProvider({
       getToken: tokenProvider.tokenCache(getOrRefreshToken, {
