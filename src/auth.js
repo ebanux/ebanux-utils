@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import session from './sessionStorage';
-import { toQueryParams } from './request';
+import { request, toQueryParams } from './request';
 
 axios.defaults.baseURL = session.serverBaseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -9,13 +9,16 @@ axios.defaults.headers.put['Content-Type'] = 'application/json';
 
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
-
   const authRequest = axios.create();
-  const options = {
-    url: session.oauthTokenUrl,
-    method: 'POST',
-    data: credentials,
-  };
+  const options = { url: session.oauthTokenUrl, method: 'POST' };
+
+  if (session.oauthTokenUrl.match(/oauth2\/token/)) {
+    options.data = toQueryParams(credentials);
+    options.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+  } else {
+    options.data = credentials;
+    options.headers = { 'Content-Type': 'application/json' };
+  }
 
   return authRequest(options)
     .then((response) => {
@@ -41,6 +44,20 @@ export function authWithAuthCode(authCode) {
     client_id: session.appClientId,
     code: authCode,
   });
+
+  //  Get Current user
+  const options = { url: session.currentUserServicePath, method: 'GET' }
+
+  return request(options).then((response) => {
+    const user = response.result || response;
+    session.set('account', user);
+    return user;
+  }).catch((err) => {
+    session.del('credentials');
+    session.del('account');
+    const message = err.response ? err.response.data.message : err.message;
+    throw Error(message);
+  });
 }
 
 export function startAuthorizationFlow() {
@@ -59,12 +76,11 @@ export function injectAuthenticationFlow(WrappedComponent) {
 
     if (urlParams.has('code')) {
       const authCode = urlParams.get('code');
-      authWithAuthCode(authCode);
-      window.location.href = `${session.appBaseUrl}`;
+      authWithAuthCode(authCode).then(() => window.location.replace(session.appBaseUrl));
     } else if (!session.isAuthenticate) {
       startAuthorizationFlow();
     } else {
-      return React.createElement(WrappedComponent, props);
+      return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
     }
 
     return React.createElement('div', {}, 'Authenticating...');

@@ -54,7 +54,14 @@ class Session {
   get oauthScope() {
     return this.get(
       'OAUTH_SCOPE',
-      process.env.OAUTH_SCOPE || process.env.REACT_APP_OAUTH_SCOPE,
+      process.env.OAUTH_SCOPE || process.env.REACT_APP_OAUTH_SCOPE || 'aws.cognito.signin.user.admin email openid',
+    );
+  }
+
+  get currentUserServicePath() {
+    return this.get(
+      'CURRENT_USER_SERVICE_PATH',
+      process.env.CURRENT_USER_SERVICE_PATH || process.env.REACT_APP_CURRENT_USER_SERVICE_PATH || 'users/me',
     );
   }
 
@@ -81,6 +88,10 @@ class Session {
 
   set oauthScope(value) {
     this.set('OAUTH_SCOPE', value);
+  }
+
+  set currentUserServicePath(value) {
+    this.set('CURRENT_USER_SERVICE_PATH', value);
   }
 
   set axiosInstance(value) {
