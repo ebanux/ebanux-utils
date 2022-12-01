@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import session from './sessionStorage';
 import { request, toQueryParams } from './request';
 
-axios.defaults.baseURL = session.serverBaseUrl;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.put['Content-Type'] = 'application/json';
-
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
-  const authRequest = axios.create();
+  const authRequest = axios.create({ baseURL: session.serverBaseUrl });
   const options = { url: session.oauthTokenUrl, method: 'POST' };
 
   if (session.oauthTokenUrl.match(/oauth2\/token/)) {
