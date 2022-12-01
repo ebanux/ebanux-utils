@@ -3,6 +3,8 @@ import axios from 'axios';
 import session from './sessionStorage';
 import { request, toQueryParams } from './request';
 
+import './spinner.css';
+
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
   const authRequest = axios.create({ baseURL: session.serverBaseUrl });
@@ -79,6 +81,8 @@ export function injectAuthenticationFlow(WrappedComponent) {
       return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
     }
 
-    return React.createElement('div', {}, 'Authenticating...');
+    const ls = React.createElement('div', { className: 'loading-spinner' });
+
+    return React.createElement('div', { className: 'spinner-container' }, ls);
   }
 }
