@@ -55,7 +55,7 @@ export function toQueryParams(requestData) {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export function request(options = {}) {
-  session.axiosInstance ||= createAxiosInstance();
+  session.axiosInstance = session.axiosInstance || createAxiosInstance();
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
 
