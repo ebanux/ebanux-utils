@@ -1,6 +1,6 @@
 {
   "name": "ebanux-utils/utils",
-  "main": "../src/utils.js",
-  "module": "../src/utils.js",
+  "main": "../dist/utils.js",
+  "module": "../dist/utils.js",
   "sideEffects": false
 }

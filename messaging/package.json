@@ -1,6 +1,6 @@
 {
   "name": "ebanux-utils/messaging",
-  "main": "../src/messaging.js",
-  "module": "../src/messaging.js",
+  "main": "../dist/messaging.js",
+  "module": "../dist/messaging.js",
   "sideEffects": false
 }
