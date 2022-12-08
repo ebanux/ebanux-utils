@@ -3,7 +3,7 @@ import axios from 'axios';
 import session from './sessionStorage';
 import { request, toQueryParams } from './request';
 
-import './spinner.css';
+import classes from './spinner.css';
 
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
@@ -33,7 +33,7 @@ export function getOrRefreshToken() {
       const message = err.response ? err.response.data.message : err.message;
       throw Error(message);
     });
-};
+}
 
 export function authWithAuthCode(authCode) {
   session.set('credentials', {
@@ -81,8 +81,10 @@ export function injectAuthenticationFlow(WrappedComponent) {
       return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
     }
 
-    const ls = React.createElement('div', { className: 'loading-spinner' });
-
-    return React.createElement('div', { className: 'spinner-container' }, ls);
+    return (
+      <div className={classes.spinner_container}>
+        <div className={classes.loading_spinner}></div>
+      </div>
+    )
   }
 }

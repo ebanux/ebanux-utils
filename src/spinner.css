@@ -6,7 +6,7 @@
         transform: rotate(360deg);
     }
 }
-.loading-spinner {
+.loading_spinner {
     width: 80px;
     height: 80px;
     border: 5px solid #f3f3f3; /* Light grey */
@@ -15,7 +15,7 @@
     animation: spinner 1.5s linear infinite;
 }
 
-.spinner-container {
+.spinner_container {
     display: grid;
     justify-content: center;
     align-items: center;

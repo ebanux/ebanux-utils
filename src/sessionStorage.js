@@ -1,9 +1,7 @@
 import LZString from 'lz-string';
 
 class Session {
-  constructor(options) {
-    this._axiosInstance = null;
-  }
+  _axiosInstance = null;
 
   get currentAccount() {
     return this.get('account');
