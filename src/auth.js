@@ -86,3 +86,8 @@ export function injectAuthenticationFlow(WrappedComponent) {
     )
   }
 }
+
+export const Authenticator = injectAuthenticationFlow(({ user, children }) => {
+  if (typeof children === 'function') return children({ user });
+  return <>{children}</>;
+});
