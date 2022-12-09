@@ -30,7 +30,10 @@ export const reduceEmptyAttrs = (obj, replaceWithNull = false) => {
   return newObj;
 };
 
+export const isBrowser = () => typeof window !== 'undefined';
+
 export const iFrameDetected = (() => {
+  if (!isBrowser()) return false;
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.has('embedded') || (window !== window.parent);
 })();

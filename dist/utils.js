@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reduceEmptyAttrs = exports.isObject = exports.isEmpty = exports.iFrameDetected = void 0;
+exports.reduceEmptyAttrs = exports.isObject = exports.isEmpty = exports.isBrowser = exports.iFrameDetected = void 0;
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -41,7 +41,12 @@ var reduceEmptyAttrs = function reduceEmptyAttrs(obj) {
   return newObj;
 };
 exports.reduceEmptyAttrs = reduceEmptyAttrs;
+var isBrowser = function isBrowser() {
+  return typeof window !== 'undefined';
+};
+exports.isBrowser = isBrowser;
 var iFrameDetected = function () {
+  if (!isBrowser()) return false;
   var urlParams = new URLSearchParams(window.location.search);
   return urlParams.has('embedded') || window !== window.parent;
 }();

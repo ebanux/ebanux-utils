@@ -3,7 +3,7 @@ import axios from 'axios';
 import session from './sessionStorage';
 import { request, toQueryParams } from './request';
 
-import classes from './spinner.css';
+import classes from './spinner.jss';
 
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
