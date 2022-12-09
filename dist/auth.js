@@ -11,7 +11,6 @@ var _react = _interopRequireDefault(require("react"));
 var _axios = _interopRequireDefault(require("axios"));
 var _sessionStorage = _interopRequireDefault(require("./sessionStorage"));
 var _request = require("./request");
-var _spinner = _interopRequireDefault(require("./spinner.jss"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -102,9 +101,9 @@ function injectAuthenticationFlow(WrappedComponent) {
       }, props));
     }
     return /*#__PURE__*/_react["default"].createElement("div", {
-      className: _spinner["default"].spinner_container
+      className: "spinner_container"
     }, /*#__PURE__*/_react["default"].createElement("div", {
-      className: _spinner["default"].loading_spinner
+      className: "loading_spinner"
     }));
   };
 }

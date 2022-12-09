@@ -5,8 +5,5 @@
   ],
   "ignore": [
     "**/*.test.js"
-  ],
-  "plugins": [
-    ["transform-import-css"]
   ]
 }
