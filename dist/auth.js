@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Authenticator = void 0;
 exports.authWithAuthCode = authWithAuthCode;
 exports.getOrRefreshToken = getOrRefreshToken;
 exports.injectAuthenticationFlow = injectAuthenticationFlow;
@@ -107,3 +108,12 @@ function injectAuthenticationFlow(WrappedComponent) {
     }));
   };
 }
+var Authenticator = injectAuthenticationFlow(function (_ref) {
+  var user = _ref.user,
+    children = _ref.children;
+  if (typeof children === 'function') return children({
+    user: user
+  });
+  return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, children);
+});
+exports.Authenticator = Authenticator;
