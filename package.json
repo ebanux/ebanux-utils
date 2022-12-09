@@ -15,7 +15,8 @@
     "./messaging": "./dist/messaging.js",
     "./request": "./dist/request.js",
     "./sessionStorage": "./dist/sessionStorage.js",
-    "./utils": "./dist/utils.js"
+    "./utils": "./dist/utils.js",
+    "./styles/spinner.css": "./styles/spinner.css"
   },
   "repository": {
     "type": "git",
