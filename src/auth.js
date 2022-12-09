@@ -3,8 +3,6 @@ import axios from 'axios';
 import session from './sessionStorage';
 import { request, toQueryParams } from './request';
 
-import classes from './spinner.jss';
-
 export function getOrRefreshToken() {
   const credentials = session.get('credentials');
   const authRequest = axios.create({ baseURL: session.serverBaseUrl });
@@ -82,8 +80,8 @@ export function injectAuthenticationFlow(WrappedComponent) {
     }
 
     return (
-      <div className={classes.spinner_container}>
-        <div className={classes.loading_spinner}></div>
+      <div className="spinner_container">
+        <div className="loading_spinner"></div>
       </div>
     )
   }
