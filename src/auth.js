@@ -68,9 +68,8 @@ export function startAuthorizationFlow() {
 
 export function injectAuthenticationFlow(WrappedComponent) {
   return (props) => {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    if (urlParams.has('code')) {
+    if (session.isAuthenticating) {
+      const urlParams = new URLSearchParams(window.location.search);
       const authCode = urlParams.get('code');
       authWithAuthCode(authCode).then(() => window.location.replace(session.appBaseUrl));
     } else if (!session.isAuthenticate) {

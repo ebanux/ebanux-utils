@@ -7,8 +7,18 @@ class Session {
     return this.get('account');
   }
 
-  get isAuthenticate() {
+  get isAuthenticated() {
     return !!this.get('credentials');
+  }
+
+  get isAuthenticate() {
+    // TODO: Deprecate...
+    return this.isAuthenticated;
+  }
+
+  get isAuthenticating() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has('code');
   }
 
   get serverBaseUrl() {
