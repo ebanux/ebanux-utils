@@ -76,7 +76,7 @@ export function injectAuthenticationFlow(WrappedComponent) {
     } else if (!session.isAuthenticate) {
       startAuthorizationFlow();
     } else {
-      return <WrappedComponent user={session.currentAccount} {...props} />
+      return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
     }
 
     return (
