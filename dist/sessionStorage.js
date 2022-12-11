@@ -41,7 +41,7 @@ var Session = /*#__PURE__*/function () {
   }, {
     key: "appBaseUrl",
     get: function get() {
-      return window.location.href.replace(/\?.*$/, '').replace(/\/$/, '');
+      return window.location.href.replace(/(https?:\/\/[^/]+).*/, '$1');
     }
   }, {
     key: "appClientId",
