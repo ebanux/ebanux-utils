@@ -88,8 +88,8 @@ function startAuthorizationFlow() {
 }
 function injectAuthenticationFlow(WrappedComponent) {
   return function (props) {
-    var urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('code')) {
+    if (_sessionStorage["default"].isAuthenticating) {
+      var urlParams = new URLSearchParams(window.location.search);
       var authCode = urlParams.get('code');
       authWithAuthCode(authCode).then(function () {
         return window.location.replace(_sessionStorage["default"].appBaseUrl);

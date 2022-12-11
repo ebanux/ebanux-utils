@@ -24,9 +24,21 @@ var Session = /*#__PURE__*/function () {
       return this.get('account');
     }
   }, {
-    key: "isAuthenticate",
+    key: "isAuthenticated",
     get: function get() {
       return !!this.get('credentials');
+    }
+  }, {
+    key: "isAuthenticate",
+    get: function get() {
+      // TODO: Deprecate...
+      return this.isAuthenticated;
+    }
+  }, {
+    key: "isAuthenticating",
+    get: function get() {
+      var urlParams = new URLSearchParams(window.location.search);
+      return urlParams.has('code');
     }
   }, {
     key: "serverBaseUrl",
