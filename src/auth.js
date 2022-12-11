@@ -76,7 +76,7 @@ export function injectAuthenticationFlow(WrappedComponent) {
     } else if (!session.isAuthenticate) {
       startAuthorizationFlow();
     } else {
-      return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
+      return <WrappedComponent user={session.currentAccount} {...props} />
     }
 
     return (
@@ -87,7 +87,8 @@ export function injectAuthenticationFlow(WrappedComponent) {
   }
 }
 
-export const Authenticator = injectAuthenticationFlow(({ user, children }) => {
-  if (typeof children === 'function') return children({ user });
-  return <>{children}</>;
-});
+const AuthenticatorInternal = ({ children, user }) => {
+  return <>{typeof children === 'function' ? children({ user }) : children}</>;
+}
+
+export const Authenticator = injectAuthenticationFlow(AuthenticatorInternal)
