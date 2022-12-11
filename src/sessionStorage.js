@@ -20,7 +20,7 @@ class Session {
   }
 
   get appBaseUrl() {
-    return window.location.href.replace(/\?.*$/, '').replace(/\/$/, '');
+    return window.location.href.replace(/(https?:\/\/[^/]+).*/, '$1');
   }
 
   get appClientId() {
