@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import session from './sessionStorage';
-import cookieCutter from 'cookie-cutter';
+import cookies from './cookiesStorage';
 import { request, toQueryParams } from './request';
 
 export function getOrRefreshToken() {
@@ -48,7 +48,7 @@ export function authWithAuthCode(authCode) {
   return request(options).then((response) => {
     const user = response.result || response;
     session.set('account', user);
-    cookieCutter.set('user', JSON.stringify(user || false));
+    cookies.set('user', user || false);
     return user;
   }).catch((err) => {
     session.del('credentials');
