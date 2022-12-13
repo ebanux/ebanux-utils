@@ -1,6 +1,0 @@
-{
-  "name": "ebanux-utils/sessionStorage",
-  "main": "../dist/sessionStorage.js",
-  "module": "../dist/sessionStorage.js",
-  "sideEffects": false
-}

@@ -1,6 +1,0 @@
-{
-  "name": "ebanux-utils/localStorage",
-  "main": "../dist/localStorage.js",
-  "module": "../dist/localStorage.js",
-  "sideEffects": false
-}

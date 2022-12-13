@@ -68,15 +68,15 @@ function authWithAuthCode(authCode) {
     method: 'GET'
   };
   return (0, _request.request)(options).then(function (response) {
-    var user = response.result || response;
-    _sessionStorage["default"].set('account', user);
-    _cookiesStorage["default"].set('user', user);
-    return user;
+    var account = response.result || response;
+    _sessionStorage["default"].set('account', account);
+    _cookiesStorage["default"].set('account', account);
+    return account;
   })["catch"](function (err) {
     _sessionStorage["default"].del('credentials');
     _sessionStorage["default"].del('account');
-    var message = err.response ? err.response.data.message : err.message;
-    throw Error(message);
+    _cookiesStorage["default"].del('account');
+    throw err;
   });
 }
 function startAuthorizationFlow() {

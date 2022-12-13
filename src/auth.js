@@ -46,15 +46,15 @@ export function authWithAuthCode(authCode) {
   const options = { url: session.currentUserServicePath, method: 'GET' }
 
   return request(options).then((response) => {
-    const user = response.result || response;
-    session.set('account', user);
-    cookies.set('user', user);
-    return user;
+    const account = response.result || response;
+    session.set('account', account);
+    cookies.set('account', account);
+    return account;
   }).catch((err) => {
     session.del('credentials');
     session.del('account');
-    const message = err.response ? err.response.data.message : err.message;
-    throw Error(message);
+    cookies.del('account');
+    throw err;
   });
 }
 

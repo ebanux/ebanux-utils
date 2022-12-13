@@ -1,6 +1,0 @@
-{
-  "name": "ebanux-utils/request",
-  "main": "../dist/request.js",
-  "module": "../dist/request.js",
-  "sideEffects": false
-}
