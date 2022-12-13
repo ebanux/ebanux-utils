@@ -48,7 +48,7 @@ export function authWithAuthCode(authCode) {
   return request(options).then((response) => {
     const user = response.result || response;
     session.set('account', user);
-    cookies.set('user', user || false);
+    cookies.set('user', user);
     return user;
   }).catch((err) => {
     session.del('credentials');

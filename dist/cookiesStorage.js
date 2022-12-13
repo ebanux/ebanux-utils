@@ -12,7 +12,8 @@ var _default = {
     var item = (0, _cookiesNext.getCookie)(_lzString["default"].compress(key), options);
     return item ? JSON.parse(_lzString["default"].decompress(item)) : null;
   },
-  set: function set(key, value, options) {
+  set: function set(key, value) {
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     return (0, _cookiesNext.setCookie)(_lzString["default"].compress(key), _lzString["default"].compress(JSON.stringify(value)), options);
   },
   del: function del(key, options) {

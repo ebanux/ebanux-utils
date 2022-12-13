@@ -7,7 +7,7 @@ export default {
     return item ? JSON.parse(LZString.decompress(item)) : null;
   },
 
-  set: (key, value, options) => setCookie(LZString.compress(key), LZString.compress(JSON.stringify(value)), options),
+  set: (key, value, options = {}) => setCookie(LZString.compress(key), LZString.compress(JSON.stringify(value)), options),
 
   del: (key, options) => deleteCookie(LZString.compress(key), options),
 
