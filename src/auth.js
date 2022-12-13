@@ -48,7 +48,7 @@ export function authWithAuthCode(authCode) {
   return request(options).then((response) => {
     const user = response.result || response;
     session.set('account', user);
-    cookieCutter.set('user', JSON.stringify(user));
+    cookieCutter.set('user', JSON.stringify(user || false));
     return user;
   }).catch((err) => {
     session.del('credentials');

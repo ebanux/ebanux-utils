@@ -70,7 +70,7 @@ function authWithAuthCode(authCode) {
   return (0, _request.request)(options).then(function (response) {
     var user = response.result || response;
     _sessionStorage["default"].set('account', user);
-    _cookieCutter["default"].set('user', JSON.stringify(user));
+    _cookieCutter["default"].set('user', JSON.stringify(user || false));
     return user;
   })["catch"](function (err) {
     _sessionStorage["default"].del('credentials');
