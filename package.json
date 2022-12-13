@@ -11,6 +11,7 @@
   "exports": {
     ".": "./dist/utils.js",
     "./auth": "./dist/auth.js",
+    "./cookiesStorage": "./dist/cookiesStorage.js",
     "./localStorage": "./dist/localStorage.js",
     "./messaging": "./dist/messaging.js",
     "./request": "./dist/request.js",
