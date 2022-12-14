@@ -18,7 +18,7 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@ebanux'
       - run: yarn install
-      - run: yarn run build
-      - run: yarn run publish
+      - run: yarn build
+      - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.RELEASE_TOKEN}}
