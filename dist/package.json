@@ -1,6 +1,6 @@
 {
   "name": "@ebanux/ebanux-utils",
-  "version": "1.1.1-0",
+  "version": "1.1.2-0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/ebanux/ebanux-utils.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@ebanux:registry": "https://npm.pkg.github.com"
   },
   "author": "yoandrypa",
   "license": "MIT",
