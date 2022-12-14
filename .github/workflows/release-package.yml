@@ -19,6 +19,7 @@ jobs:
           scope: '@ebanux'
       - run: yarn install
       - run: yarn build
+      - run: cd dist
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.RELEASE_TOKEN}}
