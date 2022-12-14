@@ -6,16 +6,6 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: yarn install
-      - run: yarn run build
-
-  publish-gpr:
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -28,6 +18,7 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com
           scope: '@ebanux'
+      - run: yarn install
       - run: yarn run build
       - run: yarn run publish
         env:
