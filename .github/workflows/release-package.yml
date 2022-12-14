@@ -12,7 +12,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn run install
+      - run: yarn install
+      - run: yarn run build
 
   publish-gpr:
     needs: build
