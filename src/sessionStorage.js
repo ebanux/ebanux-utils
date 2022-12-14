@@ -30,7 +30,7 @@ class Session {
   }
 
   get appBaseUrl() {
-    return window.location.href.replace(/(https?:\/\/[^/]+).*/, '$1');
+    return window.location.href.replace(/(https?:\/\/[^?#/]+).*/, '$1');
   }
 
   get appClientId() {
@@ -66,6 +66,20 @@ class Session {
       'OAUTH_SCOPE',
       process.env.OAUTH_SCOPE || process.env.REACT_APP_OAUTH_SCOPE || 'aws.cognito.signin.user.admin email openid',
     );
+  }
+
+  get oauthRedirectUri() {
+    const requestUri = window.location.href;
+    const value = this.get(
+      'OAUTH_REDIRECT_URI',
+      process.env.OAUTH_REDIRECT_URI || process.env.REACT_APP_OAUTH_REDIRECT_URI || 'SELF_BASE_URL',
+    );
+
+    if (value === 'SELF_FULL_URI') return requestUri;
+    if (value === 'SELF_FULL_URL') return requestUri.replace(/(https?:\/\/[^?#]+).*/, '$1');
+    if (value === 'SELF_BASE_URL') return requestUri.replace(/(https?:\/\/[^?#/]+).*/, '$1');
+
+    return value;
   }
 
   get currentUserServicePath() {

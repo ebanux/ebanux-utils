@@ -37,7 +37,7 @@ export function getOrRefreshToken() {
 export function authWithAuthCode(authCode) {
   session.set('credentials', {
     grant_type: 'authorization_code',
-    redirect_uri: session.appBaseUrl,
+    redirect_uri: session.oauthRedirectUri,
     client_id: session.appClientId,
     code: authCode,
   });
@@ -60,7 +60,7 @@ export function authWithAuthCode(authCode) {
 
 export function startAuthorizationFlow() {
   const data = {
-    redirect_uri: session.appBaseUrl,
+    redirect_uri: session.oauthRedirectUri,
     client_id: session.appClientId,
     scope: session.oauthScope,
     response_type: 'code',
@@ -73,7 +73,7 @@ export function injectAuthenticationFlow(WrappedComponent) {
     if (session.isAuthenticating) {
       const urlParams = new URLSearchParams(window.location.search);
       const authCode = urlParams.get('code');
-      authWithAuthCode(authCode).then(() => window.location.replace(session.appBaseUrl));
+      authWithAuthCode(authCode).then(() => window.location.replace(session.oauthRedirectUri));
     } else if (!session.isAuthenticate) {
       startAuthorizationFlow();
     } else {
