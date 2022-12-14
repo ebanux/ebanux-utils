@@ -9,7 +9,7 @@
     "copy": "cp package.json dist/ && cp -r LICENSE dist/ && cp -r README.md dist/ && cp -r styles dist/",
     "build": "npm run prepare-build && npm run copy",
     "version": "npm run build && git add -A dist",
-    "postversion": "git push && GIT PUSH --TAGS && rm -rf build/temp"
+    "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "repository": {
     "type": "git",
