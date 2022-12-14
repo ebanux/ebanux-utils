@@ -16,7 +16,7 @@
     "url": "git+https://github.com/ebanux/ebanux-utils.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@ebanux:registry": "https://npm.pkg.github.com"
   },
   "author": "yoandrypa",
   "license": "MIT",
