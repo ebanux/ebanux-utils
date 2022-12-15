@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "clean": "rm -rf dist",
     "prepare-build": "npm run clean && NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js'",
     "copy": "cp package.json dist/ && cp -r LICENSE dist/ && cp -r README.md dist/ && cp -r styles dist/",
     "build": "npm run prepare-build && npm run copy",
-    "publish": "npm run build && cd dist && npm publish --access public"
+    "prepublish": "npm run build",
+    "publish": "npm publish ./dist --access public"
   },
   "repository": {
     "type": "git",
