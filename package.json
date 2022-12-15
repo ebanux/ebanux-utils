@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "clean": "rm -rf dist",
     "prepare-build": "npm run clean && NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js'",
