@@ -7,7 +7,8 @@
     "clean": "rm -rf dist",
     "prepare-build": "npm run clean && NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js'",
     "copy": "cp package.json dist/ && cp -r LICENSE dist/ && cp -r README.md dist/ && cp -r styles dist/",
-    "build": "npm run prepare-build && npm run copy"
+    "build": "npm run prepare-build && npm run copy",
+    "prerelease": "npm version prerelease"
   },
   "repository": {
     "type": "git",
