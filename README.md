@@ -1,5 +1,15 @@
 ## Ebanux-Utils module
 
+### Installation:
+
+**Install from the command line:**
+    
+    $ npm install @ebanux/ebanux-utils
+
+**Install via package.json:**
+
+    "@ebanux/ebanux-utils": "^1.0.0"
+
 ### Environments:
 
     REACT_APP_AWS_COGNITO_CLIENT_ID=*********************
