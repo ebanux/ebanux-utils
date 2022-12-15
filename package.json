@@ -10,7 +10,9 @@
     "copy": "cp package.json dist/ && cp -r LICENSE dist/ && cp -r README.md dist/ && cp -r styles dist/",
     "build": "npm run prepare-build && npm run copy",
     "prepublish": "npm run build",
-    "publish": "npm publish ./dist --access public"
+    "publish": "npm publish ./dist --access public",
+    "postpublish": "npm version prerelease",
+    "version": "npm version prerelease && git push"
   },
   "repository": {
     "type": "git",
