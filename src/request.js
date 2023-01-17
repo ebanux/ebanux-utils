@@ -4,6 +4,7 @@ import session from './sessionStorage';
 
 import { isObject } from './utils';
 import { getOrRefreshToken } from './auth';
+import { StandardError } from './exceptions';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
@@ -62,8 +63,15 @@ export function request(options = {}) {
   return session.axiosInstance(options)
     .then((response) => response.data)
     .catch((err) => {
-      const message = err.response ? err.response.data.message : err.message;
-      throw Error(message);
+      let { response, message } = err;
+      let code;
+
+      if (response) {
+        message = response.data.message;
+        code = response.data.code || response.status;
+      }
+
+      throw new StandardError(message, code || 500);
     });
 }
 
