@@ -68,6 +68,15 @@ export function startAuthorizationFlow() {
   window.location.href = `${session.oauthUrl}?${toQueryParams(data)}`;
 }
 
+export function logout() {
+  const data = {
+    redirect_uri: session.logoutRedirectUri,
+    client_id: session.appClientId,
+  };
+  session.clear();
+  window.location.href = `${session.logoutUrl}?${toQueryParams(data)}`;
+}
+
 export function injectAuthenticationFlow(WrappedComponent) {
   return (props) => {
     if (session.isAuthenticating) {

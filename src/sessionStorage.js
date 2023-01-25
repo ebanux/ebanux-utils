@@ -82,6 +82,20 @@ class Session {
     return value;
   }
 
+  get logoutUrl() {
+    return this.get(
+      'LOGOUT_URL',
+      process.env.LOGOUT_URL || process.env.REACT_APP_LOGOUT_URL || `${this.apiBaseUrl}/oauth/logout`,
+    );
+  }
+
+  get logoutRedirectUri() {
+    return this.get(
+      'LOGOUT_REDIRECT_URL',
+      process.env.LOGOUT_REDIRECT_URL || process.env.REACT_APP_LOGOUT_REDIRECT_URL || this.oauthRedirectUri,
+    );
+  }
+
   get currentUserServicePath() {
     return this.get(
       'CURRENT_USER_SERVICE_PATH',
