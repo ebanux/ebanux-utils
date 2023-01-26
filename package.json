@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js' && cp package.json dist/ && cp -vr LICENSE dist/ && cp -vr README.md dist/ && cp -vr styles dist/",
+    "build": "NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js'",
+    "postbuild": "cp package.json dist/ && cp -vr LICENSE dist/ && cp -vr README.md dist/ && cp -vr styles dist/",
     "pack": "npm publish ./dist --access public",
     "postpack": "npm version patch"
   },
