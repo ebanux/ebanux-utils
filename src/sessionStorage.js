@@ -69,17 +69,12 @@ class Session {
   }
 
   get oauthRedirectUri() {
-    const requestUri = window.location.href;
     const value = this.get(
       'OAUTH_REDIRECT_URI',
       process.env.OAUTH_REDIRECT_URI || process.env.REACT_APP_OAUTH_REDIRECT_URI || 'SELF_BASE_URL',
     );
 
-    if (value === 'SELF_FULL_URI') return requestUri;
-    if (value === 'SELF_FULL_URL') return requestUri.replace(/(https?:\/\/[^?#]+).*/, '$1');
-    if (value === 'SELF_BASE_URL') return requestUri.replace(/(https?:\/\/[^?#/]+).*/, '$1');
-
-    return value;
+    return this.parseSelfURI(value);
   }
 
   get logoutUrl() {
@@ -90,16 +85,12 @@ class Session {
   }
 
   get logoutRedirectUri() {
-    return this.get(
+    const value = this.get(
       'LOGOUT_REDIRECT_URL',
       process.env.LOGOUT_REDIRECT_URI || process.env.REACT_APP_LOGOUT_REDIRECT_URI || 'SELF_BASE_URL',
     );
 
-    if (value === 'SELF_FULL_URI') return requestUri;
-    if (value === 'SELF_FULL_URL') return requestUri.replace(/(https?:\/\/[^?#]+).*/, '$1');
-    if (value === 'SELF_BASE_URL') return requestUri.replace(/(https?:\/\/[^?#/]+).*/, '$1');
-
-    return value;
+    return this.parseSelfURI(value);
   }
 
   get currentUserServicePath() {
@@ -158,6 +149,16 @@ class Session {
 
   clear() {
     window.sessionStorage.clear();
+  }
+
+  parseSelfURI(value) {
+    const requestUri = window.location.href;
+
+    if (value === 'SELF_FULL_URI') return requestUri;
+    if (value === 'SELF_FULL_URL') return requestUri.replace(/(https?:\/\/[^?#]+).*/, '$1');
+    if (value === 'SELF_BASE_URL') return requestUri.replace(/(https?:\/\/[^?#/]+).*/, '$1');
+
+    return value;
   }
 }
 
