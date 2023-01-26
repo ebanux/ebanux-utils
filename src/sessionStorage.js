@@ -92,8 +92,14 @@ class Session {
   get logoutRedirectUri() {
     return this.get(
       'LOGOUT_REDIRECT_URL',
-      process.env.LOGOUT_REDIRECT_URL || process.env.REACT_APP_LOGOUT_REDIRECT_URL || this.oauthRedirectUri,
+      process.env.LOGOUT_REDIRECT_URI || process.env.REACT_APP_LOGOUT_REDIRECT_URI || 'SELF_BASE_URL',
     );
+
+    if (value === 'SELF_FULL_URI') return requestUri;
+    if (value === 'SELF_FULL_URL') return requestUri.replace(/(https?:\/\/[^?#]+).*/, '$1');
+    if (value === 'SELF_BASE_URL') return requestUri.replace(/(https?:\/\/[^?#/]+).*/, '$1');
+
+    return value;
   }
 
   get currentUserServicePath() {
