@@ -69,12 +69,11 @@ export function startAuthorizationFlow() {
 }
 
 export function logout() {
-  const data = {
-    redirect_uri: session.logoutRedirectUri,
-    client_id: session.appClientId,
-  };
+  const { logoutUrl, logoutRedirectUri, appClientId } = this.session;
+  const data = { redirect_uri: logoutRedirectUri, client_id: appClientId };
+
   session.clear();
-  window.location.href = `${session.logoutUrl}?${toQueryParams(data)}`;
+  window.location.href = `${logoutUrl}?${toQueryParams(data)}`;
 }
 
 export function injectAuthenticationFlow(WrappedComponent) {
