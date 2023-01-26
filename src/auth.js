@@ -69,7 +69,7 @@ export function startAuthorizationFlow() {
 }
 
 export function logout() {
-  const { logoutUrl, logoutRedirectUri, appClientId } = this.session;
+  const { logoutUrl, logoutRedirectUri, appClientId } = session;
   const data = { redirect_uri: logoutRedirectUri, client_id: appClientId };
 
   session.clear();
