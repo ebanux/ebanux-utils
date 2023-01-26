@@ -1,6 +1,6 @@
 {
   "name": "@ebanux/ebanux-utils",
-  "version": "1.0.8",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production babel src --out-dir dist --ignore 'src/**/*.test.js'",
     "postbuild": "cp package.json dist/ && cp -vr LICENSE dist/ && cp -vr README.md dist/ && cp -vr styles dist/",
-    "pack": "npm publish ./dist --access public",
-    "postpack": "npm version patch"
+    "pack": "npm publish ./dist --access public && npm version patch"
   },
   "repository": {
     "type": "git",
