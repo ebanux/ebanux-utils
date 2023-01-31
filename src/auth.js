@@ -73,7 +73,6 @@ export function logout() {
   const data = {
     logout_uri: logoutRedirectUri,
     client_id: appClientId,
-    response_type: 'code',
   };
 
   session.clear();
