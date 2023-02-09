@@ -19,9 +19,10 @@ export function getOrRefreshToken() {
 
   return authRequest(options)
     .then((response) => {
+      const { refresh_token } = session.get('credentials', {});
       session.set('credentials', {
         grant_type: 'refresh_token',
-        refresh_token: response.data.refresh_token,
+        refresh_token: response.data.refresh_token || refresh_token,
         client_id: session.appClientId,
       });
 
