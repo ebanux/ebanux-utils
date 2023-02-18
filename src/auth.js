@@ -50,7 +50,7 @@ export function authWithAuthCode(authCode) {
     const user = response.result || response;
     session.set('user', user);
     cookies.set('user', user);
-    return account;
+    return user;
   }).catch((err) => {
     session.del('credentials');
     session.del('user');
