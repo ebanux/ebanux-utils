@@ -3,17 +3,21 @@ import LZString from 'lz-string';
 class Session {
   _axiosInstance = null;
 
+  /**
+   * TODO: This property is deprecated, use currentUser instead.
+   * @returns {any}
+   */
   get currentAccount() {
-    return this.get('account');
+    console.log('The currentAccount property is deprecated, use currentUser instead.');
+    return this.currentUser;
+  }
+
+  get currentUser() {
+    return this.get('user');
   }
 
   get isAuthenticated() {
-    return !!this.get('credentials');
-  }
-
-  get isAuthenticate() {
-    // TODO: Deprecate...
-    return this.isAuthenticated;
+    return !!this.currentUser;
   }
 
   get isAuthenticating() {

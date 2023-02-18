@@ -29,7 +29,7 @@ export function getOrRefreshToken() {
       return response.data;
     }).catch((err) => {
       session.del('credentials');
-      session.del('account');
+      session.del('user');
       const message = err.response ? err.response.data.message : err.message;
       throw Error(message);
     });
@@ -47,14 +47,14 @@ export function authWithAuthCode(authCode) {
   const options = { url: session.currentUserServicePath, method: 'GET' }
 
   return request(options).then((response) => {
-    const account = response.result || response;
-    session.set('account', account);
-    cookies.set('account', account);
+    const user = response.result || response;
+    session.set('user', user);
+    cookies.set('user', user);
     return account;
   }).catch((err) => {
     session.del('credentials');
-    session.del('account');
-    cookies.del('account');
+    session.del('user');
+    cookies.del('user');
     throw err;
   });
 }
@@ -86,10 +86,10 @@ export function injectAuthenticationFlow(WrappedComponent) {
       const urlParams = new URLSearchParams(window.location.search);
       const authCode = urlParams.get('code');
       authWithAuthCode(authCode).then(() => window.location.replace(session.oauthRedirectUri));
-    } else if (!session.isAuthenticate) {
+    } else if (!session.isAuthenticated) {
       startAuthorizationFlow();
     } else {
-      return React.createElement(WrappedComponent, { user: session.currentAccount, ...props });
+      return React.createElement(WrappedComponent, { user: session.currentUser, ...props });
     }
 
     return (
