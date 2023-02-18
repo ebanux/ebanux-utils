@@ -25,7 +25,7 @@ class Messaging {
     return emitter.addListener(eventType, callBack);
   }
 
-  emitMessage(messageId, data, senderId, timeout) {
+  emit(messageId, data, senderId, timeout) {
     const eventType = this.getEventType(messageId, senderId);
     data = data instanceof Array ? data : [data];
 
