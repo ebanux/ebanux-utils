@@ -36,8 +36,12 @@ class Messaging {
     }
   }
 
-  delMessagingListener(subscription) {
-    subscription.remove();
+  delMessagingListener(subscriptions) {
+    subscriptions = Array.isArray(subscriptions) ? subscriptions : [subscriptions];
+    subscriptions.forEach((dS) => {
+      this.subscriptions = this.subscriptions.filter((cS) => cS !== dS);
+      dS.remove();
+    });
   }
 }
 
