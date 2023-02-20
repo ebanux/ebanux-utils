@@ -1,7 +1,9 @@
 /* eslint max-classes-per-file: ['off'] */
 
-class StandardError extends Error {
-  constructor(message, code = 0) {
+export class StandardError extends Error {
+  code: number;
+
+  constructor(message: string, code: number = 0) {
     super(message);
     // Ensure the name of this error is the same as the class name
     this.name = this.constructor.name;
@@ -13,13 +15,8 @@ class StandardError extends Error {
   }
 }
 
-class NotFound extends StandardError {
-  constructor(message = '') {
+export class NotFound extends StandardError {
+  constructor(message: string = '') {
     super(message || 'Resource not found', 404);
   }
 }
-
-module.exports = {
-  StandardError,
-  NotFound,
-};

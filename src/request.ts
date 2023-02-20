@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+// @ts-ignore
 import tokenProvider from 'axios-token-interceptor';
 import session from './sessionStorage';
 
@@ -16,23 +17,23 @@ export function createAxiosInstance(apiBaseUrl = null) {
   axiosInstance.interceptors.request.use(
     tokenProvider({
       getToken: tokenProvider.tokenCache(getOrRefreshToken, {
-        getMaxAge: (response) => response.expires_in * 1000,
+        getMaxAge: (response: any) => response.expires_in * 1000,
       }),
-      headerFormatter: (response) => `Bearer ${response.id_token}`,
+      headerFormatter: (response: any) => `Bearer ${response.id_token}`,
     }),
   );
 
   return axiosInstance;
 };
 
-export function toQueryParams(requestData) {
-  const qs = [];
-  const add = (key, value) => {
+export function toQueryParams(requestData: any): string {
+  const qs: string[] = [];
+  const add = (key: string, value: any) => {
     let v = typeof value === 'function' ? value() : value;
     if (v !== null && v !== undefined) qs[qs.length] = `${encodeURIComponent(key)}=${encodeURIComponent(v)}`;
   };
 
-  const buildParams = (prefix, data) => {
+  const buildParams = (prefix: string, data: any): string[] => {
     if (prefix) {
       if (Array.isArray(data)) {
         data.forEach((item, idx) => {
@@ -55,12 +56,12 @@ export function toQueryParams(requestData) {
 }
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
-export function request(options = {}) {
+export function request(options: AxiosRequestConfig = {}) {
   session.axiosInstance ||= createAxiosInstance();
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
 
-  return session.axiosInstance(options)
+  return session.axiosInstance?.(options)
     .then((response) => response.data)
     .catch((err) => {
       let { response, message } = err;

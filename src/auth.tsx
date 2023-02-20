@@ -1,13 +1,13 @@
 import React from 'react';
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import session from './sessionStorage';
 import cookies from './cookiesStorage';
 import { request, toQueryParams } from './request';
 
-export function getOrRefreshToken() {
-  const credentials = session.get('credentials');
-  const authRequest = axios.create({ baseURL: session.serverBaseUrl });
-  const options = { url: session.oauthTokenUrl, method: 'POST' };
+export function getOrRefreshToken(): Promise<any> {
+  const credentials: any = session.get('credentials');
+  const authRequest: AxiosInstance = axios.create({ baseURL: session.serverBaseUrl });
+  const options: AxiosRequestConfig = { url: session.oauthTokenUrl, method: 'POST' };
 
   if (session.oauthTokenUrl.match(/oauth2\/token/)) {
     options.data = toQueryParams(credentials);
@@ -35,7 +35,7 @@ export function getOrRefreshToken() {
     });
 }
 
-export function authWithAuthCode(authCode) {
+export function authWithAuthCode(authCode: string): Promise<any> {
   session.set('credentials', {
     grant_type: 'authorization_code',
     redirect_uri: session.oauthRedirectUri,
@@ -46,12 +46,12 @@ export function authWithAuthCode(authCode) {
   //  Get Current user
   const options = { url: session.currentUserServicePath, method: 'GET' }
 
-  return request(options).then((response) => {
+  return request(options).then((response: any) => {
     const user = response.result || response;
     session.set('user', user);
     cookies.set('user', user);
     return user;
-  }).catch((err) => {
+  }).catch((err: any) => {
     session.del('credentials');
     session.del('user');
     cookies.del('user');
@@ -80,12 +80,12 @@ export function logout() {
   window.location.href = `${logoutUrl}?${toQueryParams(data)}`;
 }
 
-export function injectAuthenticationFlow(WrappedComponent) {
-  return (props) => {
+export function injectAuthenticationFlow(WrappedComponent: any) {
+  return (props: any) => {
     if (session.isAuthenticating) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const authCode = urlParams.get('code');
-      authWithAuthCode(authCode).then(() => window.location.replace(session.oauthRedirectUri));
+      const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
+      const authCode: string | null = urlParams.get('code');
+      authWithAuthCode(authCode as string).then(() => window.location.replace(session.oauthRedirectUri));
     } else if (!session.isAuthenticated) {
       startAuthorizationFlow();
     } else {
@@ -94,13 +94,14 @@ export function injectAuthenticationFlow(WrappedComponent) {
 
     return (
       <div className="spinner_container">
-        <div className="loading_spinner"></div>
+        <div className="loading_spinner">
+        </div>
       </div>
     )
   }
 }
 
-const AuthenticatorInternal = ({ children, user }) => {
+const AuthenticatorInternal = ({ children, user }: any) => {
   return <>{typeof children === 'function' ? children({ user }) : children}</>;
 }
 
