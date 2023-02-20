@@ -10,7 +10,7 @@ import { StandardError } from './exceptions';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
-export function createAxiosInstance(apiBaseUrl = null) {
+export function createAxiosInstance(apiBaseUrl?: string) {
   let axiosInstance;
 
   axiosInstance = axios.create({ withCredentials: true, baseURL: apiBaseUrl || session.apiBaseUrl });
