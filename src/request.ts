@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 // @ts-ignore
 import tokenProvider from 'axios-token-interceptor';
 import session from './sessionStorage';
@@ -10,8 +10,8 @@ import { StandardError } from './exceptions';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
-export function createAxiosInstance(apiBaseUrl?: string) {
-  let axiosInstance;
+export function createAxiosInstance(apiBaseUrl?: string): AxiosInstance {
+  let axiosInstance: AxiosInstance;
 
   axiosInstance = axios.create({ withCredentials: true, baseURL: apiBaseUrl || session.apiBaseUrl });
   axiosInstance.interceptors.request.use(
@@ -56,12 +56,13 @@ export function toQueryParams(requestData: any): string {
 }
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
-export function request(options: AxiosRequestConfig = {}) {
-  session.axiosInstance ||= createAxiosInstance();
+export function request(options: AxiosRequestConfig = {}): Promise<any> {
+  const axiosInstance = session.axiosInstance || createAxiosInstance();
+  session.axiosInstance = axiosInstance;
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
 
-  return session.axiosInstance?.(options)
+  return axiosInstance(options)
     .then((response) => response.data)
     .catch((err) => {
       let { response, message } = err;

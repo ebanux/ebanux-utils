@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "babel-build": "NODE_ENV=production babel src --out-dir dist --extensions '.js,.ts' --ignore 'src/**/*.test.js'",
+    "babel-build": "NODE_ENV=production babel src --out-dir dist --extensions '.js,.ts,.tsx' --ignore 'src/**/*.test.js'",
     "tsc-build": "NODE_ENV=production tsc -p tsconfig.json",
     "build": "npm run babel-build && npm run tsc-build",
     "postbuild": "cp package.json dist/ && cp -vr LICENSE dist/ && cp -vr README.md dist/ && cp -vr styles dist/",
