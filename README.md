@@ -12,7 +12,7 @@
 
 ### Environments:
 
-    AWS_COGNITO_CLIENT_ID=*********************
+    AMZ_WS_COGNITO_CLIENT_ID=*********************
     
     SERVER_BASE_URL=http://my-backend.com
     API_BASE_PATH=api/v2.0

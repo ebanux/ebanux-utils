@@ -40,70 +40,68 @@ class Session {
   }
 
   get appClientId(): string {
-    return this.get(
-      'APP_CLIENT_ID',
-      process.env.AWS_COGNITO_CLIENT_ID || process.env.REACT_APP_AWS_COGNITO_CLIENT_ID,
-    )
+    const defaultValue = process.env.AMZ_WS_COGNITO_CLIENT_ID
+      || process.env.AWS_COGNITO_CLIENT_ID
+      || process.env.REACT_APP_AWS_COGNITO_CLIENT_ID;
+    return this.get('APP_CLIENT_ID', defaultValue);
   }
 
   get apiBasePath(): string {
-    return this.get(
-      'API_BASE_PATH',
-      process.env.API_BASE_PATH || process.env.REACT_APP_API_BASE_PATH,
-    );
+    const defaultValue = process.env.API_BASE_PATH
+      || process.env.REACT_APP_API_BASE_PATH;
+    return this.get('API_BASE_PATH', defaultValue);
   }
 
   get oauthTokenUrl(): string {
-    return this.get(
-      'OAUTH_TOKEN_URL',
-      process.env.OAUTH_TOKEN_URL || process.env.REACT_APP_OAUTH_TOKEN_URL || `${this.apiBaseUrl}/oauth/token`,
-    );
+    const defaultValue = process.env.OAUTH_TOKEN_URL
+      || process.env.REACT_APP_OAUTH_TOKEN_URL
+      || `${this.apiBaseUrl}/oauth/token`;
+    return this.get('OAUTH_TOKEN_URL', defaultValue);
   }
 
   get oauthUrl(): string {
-    return this.get(
-      'OAUTH_URL',
-      process.env.OAUTH_URL || process.env.REACT_APP_OAUTH_URL || `${this.apiBaseUrl}/oauth/authorize`
-    );
+    const defaultValue = process.env.OAUTH_URL
+      || process.env.REACT_APP_OAUTH_URL
+      || `${this.apiBaseUrl}/oauth/authorize`;
+    return this.get('OAUTH_URL', defaultValue);
   }
 
   get oauthScope(): string {
-    return this.get(
-      'OAUTH_SCOPE',
-      process.env.OAUTH_SCOPE || process.env.REACT_APP_OAUTH_SCOPE || 'aws.cognito.signin.user.admin email openid',
-    );
+    const defaultValue = process.env.OAUTH_SCOPE
+      || process.env.REACT_APP_OAUTH_SCOPE
+      || 'aws.cognito.signin.user.admin email openid';
+    return this.get('OAUTH_SCOPE', defaultValue);
   }
 
   get oauthRedirectUri(): string {
-    const value = this.get(
-      'OAUTH_REDIRECT_URI',
-      process.env.OAUTH_REDIRECT_URI || process.env.REACT_APP_OAUTH_REDIRECT_URI || 'SELF_BASE_URL',
-    );
-
+    const defaultValue = process.env.OAUTH_REDIRECT_URI
+      || process.env.REACT_APP_OAUTH_REDIRECT_URI
+      || 'SELF_BASE_URL';
+    const value = this.get('OAUTH_REDIRECT_URI', defaultValue);
     return this.parseSelfURI(value);
   }
 
   get logoutUrl(): string {
-    return this.get(
-      'LOGOUT_URL',
-      process.env.LOGOUT_URL || process.env.REACT_APP_LOGOUT_URL || `${this.apiBaseUrl}/oauth/logout`,
-    );
+    const defaultValue = process.env.LOGOUT_URL
+      || process.env.REACT_APP_LOGOUT_URL
+      || `${this.apiBaseUrl}/oauth/logout`;
+    return this.get('LOGOUT_URL', defaultValue);
   }
 
   get logoutRedirectUri(): string {
-    const value = this.get(
-      'LOGOUT_REDIRECT_URL',
-      process.env.LOGOUT_REDIRECT_URI || process.env.REACT_APP_LOGOUT_REDIRECT_URI || 'SELF_BASE_URL',
-    );
+    const defaultValue = process.env.LOGOUT_REDIRECT_URI
+      || process.env.REACT_APP_LOGOUT_REDIRECT_URI
+      || 'SELF_BASE_URL';
+    const value = this.get('LOGOUT_REDIRECT_URL', defaultValue);
 
     return this.parseSelfURI(value);
   }
 
   get currentUserServicePath(): string {
-    return this.get(
-      'CURRENT_USER_SERVICE_PATH',
-      process.env.CURRENT_USER_SERVICE_PATH || process.env.REACT_APP_CURRENT_USER_SERVICE_PATH || 'users/me',
-    );
+    const defaultValue = process.env.CURRENT_USER_SERVICE_PATH
+      || process.env.REACT_APP_CURRENT_USER_SERVICE_PATH
+      || 'users/me';
+    return this.get('CURRENT_USER_SERVICE_PATH', defaultValue);
   }
 
   get axiosInstance(): AxiosInstance | null {
