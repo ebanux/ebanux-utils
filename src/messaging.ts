@@ -28,7 +28,7 @@ class Messaging {
     return emitter.addListener(eventType, callBack);
   }
 
-  emit(messageId: string, data: any, senderId?: string, timeout?: number) {
+  emit(messageId: string, data?: any, senderId?: string, timeout?: number) {
     const eventType = this.getEventType(messageId, senderId);
     data = data instanceof Array ? data : [data];
 
@@ -54,7 +54,7 @@ class Messaging {
   }
 
   // TODO: Deprecated
-  emitMessage(messageId: string, data: any, senderId?: string, timeout?: number) {
+  emitMessage(messageId: string, data?: any, senderId?: string, timeout?: number) {
     console.warn('The emitMessage property is deprecated, use emit instead.');
     this.emit(messageId, data, senderId, timeout);
   }
