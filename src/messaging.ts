@@ -39,6 +39,16 @@ class Messaging {
     }
   }
 
+  get(messageId: string, senderId?: string) {
+    const eventType = this.getEventType(messageId, senderId);
+
+    return this.subscriptions.filter((s: any) => (s.eventType === eventType));
+  }
+
+  exists(messageId: string, senderId?: string) {
+    return this.get(messageId, senderId).length !== 0;
+  }
+
   delListener(subscriptions: any) {
     subscriptions = Array.isArray(subscriptions) ? subscriptions : [subscriptions];
     subscriptions.forEach((dS: any) => {

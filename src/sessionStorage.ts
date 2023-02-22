@@ -137,9 +137,9 @@ class Session {
     this._axiosInstance = value;
   }
 
-  get(key: string, defaultValue?: any): any {
+  get(key: string, defaultValue?: any, remove: boolean = false): any {
     const item = window.sessionStorage.getItem(LZString.compress(key));
-
+    remove && this.del(key);
     return (item === null) ? defaultValue : JSON.parse(LZString.decompress(item));
   }
 

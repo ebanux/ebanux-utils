@@ -2,6 +2,7 @@ import React from 'react';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import session from './sessionStorage';
 import cookies from './cookiesStorage';
+import messaging from './messaging';
 import { request, toQueryParams } from './request';
 
 export function getOrRefreshToken(): Promise<any> {
@@ -90,6 +91,11 @@ export function injectAuthenticationFlow(WrappedComponent: any) {
       startAuthorizationFlow();
     } else {
       return React.createElement(WrappedComponent, { user: session.currentUser, ...props });
+    }
+
+    if (messaging.exists('startWaiting')) {
+      messaging.emit('startWaiting');
+      return <div />
     }
 
     return (
