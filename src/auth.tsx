@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import session from './sessionStorage';
 import cookies from './cookiesStorage';
-import messaging from './messaging';
 import { request, toQueryParams } from './request';
 
 export function getOrRefreshToken(): Promise<any> {
@@ -83,27 +82,21 @@ export function logout() {
 
 export function injectAuthenticationFlow(WrappedComponent: any) {
   return (props: any) => {
-    if (session.isAuthenticating) {
-      const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
-      const authCode: string | null = urlParams.get('code');
-      authWithAuthCode(authCode as string).then(() => window.location.replace(session.oauthRedirectUri));
-    } else if (!session.isAuthenticated) {
-      startAuthorizationFlow();
-    } else {
+    useEffect(() => {
+      if (session.isAuthenticating) {
+        const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
+        const authCode: string | null = urlParams.get('code');
+        authWithAuthCode(authCode as string).then(() => window.location.replace(session.oauthRedirectUri));
+      } else if (!session.isAuthenticated) {
+        startAuthorizationFlow();
+      }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (session.isAuthenticated) {
       return React.createElement(WrappedComponent, { user: session.currentUser, ...props });
     }
 
-    if (messaging.exists('startWaiting')) {
-      messaging.emit('startWaiting');
-      return <div />
-    }
-
-    return (
-      <div className="spinner_container">
-        <div className="loading_spinner">
-        </div>
-      </div>
-    )
+    return <div />
   }
 }
 
