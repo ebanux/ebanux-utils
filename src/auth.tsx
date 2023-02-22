@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import session from './sessionStorage';
 import cookies from './cookiesStorage';
@@ -82,17 +82,33 @@ export function logout() {
 
 export function injectAuthenticationFlow(WrappedComponent: any) {
   return (props: any) => {
+    const [authenticating, setAuthenticating] = useState<boolean>(false);
+    const [authenticated, setAuthenticated] = useState<boolean>(false);
+
     useEffect(() => {
-      if (session.isAuthenticating) {
+      setAuthenticating(session.isAuthenticating);
+      setAuthenticated(session.isAuthenticated);
+    }, []);
+
+    useEffect(() => {
+      if (authenticating) {
         const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
         const authCode: string | null = urlParams.get('code');
-        authWithAuthCode(authCode as string).then(() => window.location.replace(session.oauthRedirectUri));
-      } else if (!session.isAuthenticated) {
+        authWithAuthCode(authCode as string).then(() => {
+          setAuthenticating(false);
+          setAuthenticated(true);
+          window.location.replace(session.oauthRedirectUri)
+        }).catch((err: any) => {
+          setAuthenticating(false);
+          setAuthenticated(false);
+          console.error(err.menssage);
+        });
+      } else if (!authenticated) {
         startAuthorizationFlow();
       }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [authenticating, authenticated]);
 
-    if (session.isAuthenticated) {
+    if (authenticated) {
       return React.createElement(WrappedComponent, { user: session.currentUser, ...props });
     }
 
