@@ -32,8 +32,8 @@ export const reduceEmptyAttrs = (obj: any, replaceWithNull: boolean = false) => 
 
 export const isBrowser = (): boolean => typeof window !== 'undefined';
 
-export const iFrameDetected: boolean = (() => {
+export const iFrameDetected = (): boolean => {
   if (!isBrowser()) return false;
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.has('embedded') || (window !== window.parent);
-})();
+};
