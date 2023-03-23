@@ -10,11 +10,11 @@ import { StandardError } from './exceptions';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
-export function createAxiosInstance(apiBaseUrl?: string): AxiosInstance {
+export function createAxiosInstance(apiBaseUrl?: string, withOAuth = true): AxiosInstance {
   let axiosInstance: AxiosInstance;
 
   axiosInstance = axios.create({ withCredentials: true, baseURL: apiBaseUrl || session.apiBaseUrl });
-  axiosInstance.interceptors.request.use(
+  withOAuth && axiosInstance.interceptors.request.use(
     tokenProvider({
       getToken: tokenProvider.tokenCache(getOrRefreshToken, {
         getMaxAge: (response: any) => response.expires_in * 1000,
