@@ -5,15 +5,6 @@ import { AxiosInstance } from 'axios';
 class Session {
   _axiosInstance: AxiosInstance | null = null;
 
-  /**
-   * TODO: This property is deprecated, use currentUser instead.
-   * @returns {any}
-   */
-  get currentAccount(): any {
-    console.log('The currentAccount property is deprecated, use currentUser instead.');
-    return this.currentUser;
-  }
-
   get currentUser(): any {
     return this.get('user');
   }
@@ -59,11 +50,42 @@ class Session {
     return this.get('OAUTH_TOKEN_URL', defaultValue);
   }
 
-  get oauthUrl(): string {
-    const defaultValue = process.env.OAUTH_URL
-      || process.env.REACT_APP_OAUTH_URL
+  get signInUrl(): string {
+    const defaultValue = process.env.SIGN_IN_URL
+      || process.env.REACT_APP_SIGN_IN_URL
       || `${this.apiBaseUrl}/oauth/authorize`;
-    return this.get('OAUTH_URL', defaultValue);
+    return this.get('SIGN_IN_URL', defaultValue);
+  }
+
+  get signUpUrl(): string {
+    const defaultValue = process.env.SIGN_UP_URL
+      || process.env.REACT_APP_SIGN_UP_URL
+      || `${this.apiBaseUrl}/oauth/signup`;
+    return this.get('SIGN_UP_URL', defaultValue);
+  }
+
+  get signOutUrl(): string {
+    const defaultValue = process.env.SIGN_OUT_URL
+      || process.env.REACT_APP_SIGN_OUT_URL
+      || `${this.apiBaseUrl}/oauth/logout`;
+    return this.get('SIGN_UP_URL', defaultValue);
+  }
+
+  get signInRedirectUri(): string {
+    const defaultValue = process.env.SIGN_IN_REDIRECT_URI
+      || process.env.REACT_APP_SIGN_IN_REDIRECT_URI
+      || 'SELF_BASE_URL';
+    const value = this.get('SIGN_IN_REDIRECT_URI', defaultValue);
+    return this.parseSelfURI(value);
+  }
+
+  get signOutRedirectUri(): string {
+    const defaultValue = process.env.SIGN_OUT_REDIRECT_URI
+      || process.env.REACT_APP_SIGN_OUT_REDIRECT_URI
+      || 'SELF_BASE_URL';
+    const value = this.get('SIGN_OUT_REDIRECT_URI', defaultValue);
+
+    return this.parseSelfURI(value);
   }
 
   get oauthScope(): string {
@@ -71,30 +93,6 @@ class Session {
       || process.env.REACT_APP_OAUTH_SCOPE
       || 'aws.cognito.signin.user.admin email openid';
     return this.get('OAUTH_SCOPE', defaultValue);
-  }
-
-  get oauthRedirectUri(): string {
-    const defaultValue = process.env.OAUTH_REDIRECT_URI
-      || process.env.REACT_APP_OAUTH_REDIRECT_URI
-      || 'SELF_BASE_URL';
-    const value = this.get('OAUTH_REDIRECT_URI', defaultValue);
-    return this.parseSelfURI(value);
-  }
-
-  get logoutUrl(): string {
-    const defaultValue = process.env.LOGOUT_URL
-      || process.env.REACT_APP_LOGOUT_URL
-      || `${this.apiBaseUrl}/oauth/logout`;
-    return this.get('LOGOUT_URL', defaultValue);
-  }
-
-  get logoutRedirectUri(): string {
-    const defaultValue = process.env.LOGOUT_REDIRECT_URI
-      || process.env.REACT_APP_LOGOUT_REDIRECT_URI
-      || 'SELF_BASE_URL';
-    const value = this.get('LOGOUT_REDIRECT_URL', defaultValue);
-
-    return this.parseSelfURI(value);
   }
 
   get currentUserServicePath(): string {
@@ -121,8 +119,12 @@ class Session {
     this.set('OAUTH_TOKEN_URL', value);
   }
 
-  set oauthUrl(value: string) {
-    this.set('OAUTH_URL', value);
+  set signInUrl(value: string) {
+    this.set('SIGN_IN_URL', value);
+  }
+
+  set signUpUrl(value: string) {
+    this.set('SIGN_UP_URL', value);
   }
 
   set oauthScope(value: string) {

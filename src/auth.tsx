@@ -38,7 +38,7 @@ export function getOrRefreshToken(): Promise<any> {
 export function authWithAuthCode(authCode: string): Promise<any> {
   session.set('credentials', {
     grant_type: 'authorization_code',
-    redirect_uri: session.oauthRedirectUri,
+    redirect_uri: session.signInRedirectUri,
     client_id: session.appClientId,
     code: authCode,
   });
@@ -59,25 +59,26 @@ export function authWithAuthCode(authCode: string): Promise<any> {
   });
 }
 
-export function startAuthorizationFlow() {
+export function startAuthorizationFlow(signUp?: boolean) {
+  const { signInUrl, signUpUrl, signInRedirectUri, appClientId, oauthScope } = session;
   const data = {
-    redirect_uri: session.oauthRedirectUri,
-    client_id: session.appClientId,
-    scope: session.oauthScope,
+    redirect_uri: signInRedirectUri,
+    client_id: appClientId,
+    scope: oauthScope,
     response_type: 'code',
   };
-  window.location.href = `${session.oauthUrl}?${toQueryParams(data)}`;
+  window.location.href = `${signUp ? signUpUrl : signInUrl}?${toQueryParams(data)}`;
 }
 
-export function logout() {
-  const { logoutUrl, logoutRedirectUri, appClientId } = session;
+export function signOut() {
+  const { signOutUrl, signOutRedirectUri, appClientId } = session;
   const data = {
-    logout_uri: logoutRedirectUri,
+    logout_uri: signOutRedirectUri,
     client_id: appClientId,
   };
 
   session.clear();
-  window.location.href = `${logoutUrl}?${toQueryParams(data)}`;
+  window.location.href = `${signOutUrl}?${toQueryParams(data)}`;
 }
 
 export function injectAuthenticationFlow(WrappedComponent: any) {
@@ -86,7 +87,7 @@ export function injectAuthenticationFlow(WrappedComponent: any) {
       if (session.isAuthenticating) {
         const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
         const authCode: string | null = urlParams.get('code');
-        authWithAuthCode(authCode as string).then(() => window.location.replace(session.oauthRedirectUri));
+        authWithAuthCode(authCode as string).then(() => window.location.replace(session.signInRedirectUri));
       } else if (!session.isAuthenticated) {
         startAuthorizationFlow();
       }
