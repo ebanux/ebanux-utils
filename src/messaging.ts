@@ -56,24 +56,6 @@ class Messaging {
       dS.remove();
     });
   }
-
-  // TODO: Deprecated
-  addMessagingListener(messageId: string, callBack: CallBack, senderId?: string) {
-    console.warn('The addMessagingListener property is deprecated, use addListener instead.');
-    this.addListener(messageId, callBack, senderId);
-  }
-
-  // TODO: Deprecated
-  emitMessage(messageId: string, data?: any, senderId?: string, timeout?: number) {
-    console.warn('The emitMessage property is deprecated, use emit instead.');
-    this.emit(messageId, data, senderId, timeout);
-  }
-
-  // TODO: Deprecated
-  delMessagingListener(subscriptions: any) {
-    console.warn('The delMessagingListener property is deprecated, use delListener instead.');
-    this.delListener(subscriptions);
-  }
 }
 
 const messaging = new Messaging();
