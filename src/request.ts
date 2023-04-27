@@ -73,6 +73,8 @@ export function request(options: AxiosRequestConfig = {}): Promise<any> {
         code = response.data.code || response.status;
       }
 
+      if (Array.isArray(message)) message = message.join('\n');
+
       throw new StandardError(message, code || 500);
     });
 }
