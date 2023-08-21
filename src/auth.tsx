@@ -87,7 +87,9 @@ export function injectAuthenticationFlow(WrappedComponent: any) {
       if (session.isAuthenticating) {
         const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
         const authCode: string | null = urlParams.get('code');
-        authWithAuthCode(authCode as string).then(() => window.location.replace(session.signInRedirectUri));
+        authWithAuthCode(authCode as string)
+          .then(() => window.location.replace(session.signInRedirectUri))
+          .catch(() => startAuthorizationFlow())
       } else if (!session.isAuthenticated) {
         startAuthorizationFlow();
       }
