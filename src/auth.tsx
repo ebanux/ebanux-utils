@@ -35,14 +35,7 @@ export function getOrRefreshToken(): Promise<any> {
     });
 }
 
-export function authWithAuthCode(authCode: string): Promise<any> {
-  session.set('credentials', {
-    grant_type: 'authorization_code',
-    redirect_uri: session.signInRedirectUri,
-    client_id: session.appClientId,
-    code: authCode,
-  });
-
+export function loadCurrentUser(): Promise<any> {
   //  Get Current user
   const options = { url: session.currentUserServicePath, method: 'GET' }
 
@@ -57,6 +50,18 @@ export function authWithAuthCode(authCode: string): Promise<any> {
     cookies.del('user');
     throw err;
   });
+}
+
+export function authWithAuthCode(authCode: string): Promise<any> {
+  session.set('credentials', {
+    grant_type: 'authorization_code',
+    redirect_uri: session.signInRedirectUri,
+    client_id: session.appClientId,
+    code: authCode,
+  });
+
+  //  Get Current user
+  return loadCurrentUser();
 }
 
 export function startAuthorizationFlow(signUp?: boolean) {

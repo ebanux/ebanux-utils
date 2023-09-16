@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 // @ts-ignore
 import tokenProvider from 'axios-token-interceptor';
 import session from './sessionStorage';
