@@ -23,7 +23,7 @@ export function createAxiosInstance(apiBaseUrl?: string, withOAuth = true) {
   );
 
   return axiosInstance;
-};
+}
 
 export function toQueryParams(requestData: any): string {
   const qs: string[] = [];
@@ -56,7 +56,14 @@ export function toQueryParams(requestData: any): string {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export function request(options: AxiosRequestConfig = {}): Promise<any> {
-  const axiosInstance = session.axiosInstance || createAxiosInstance();
+  let axiosInstance;
+
+  if (options.withCredentials === undefined) {
+    axiosInstance = session.axiosInstance || createAxiosInstance();
+  } else {
+    axiosInstance = createAxiosInstance(undefined, options.withCredentials);
+  }
+
   session.axiosInstance = axiosInstance;
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
