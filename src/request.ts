@@ -60,11 +60,10 @@ export function request(options: AxiosRequestConfig = {}): Promise<any> {
 
   if (options.withCredentials === undefined) {
     axiosInstance = session.axiosInstance || createAxiosInstance();
+    session.axiosInstance = axiosInstance;
   } else {
     axiosInstance = createAxiosInstance(undefined, options.withCredentials);
   }
-
-  session.axiosInstance = axiosInstance;
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
 
