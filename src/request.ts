@@ -67,13 +67,12 @@ export function request(options: AxiosRequestConfig): Promise<any> {
 
   options.timeout ??= session.apiRequestTimeout;
   options.signal ??= options.timeout !== undefined ? abortSignal(options.timeout) : undefined;
-  options.withCredentials ??= session.isAuthenticated;
 
-  if (options.withCredentials === undefined) {
+  if (session.isAuthenticated && options.withCredentials !== false) {
     axiosInstance = session.axiosInstance || createAxiosInstance();
     session.axiosInstance = axiosInstance;
   } else {
-    axiosInstance = createAxiosInstance(undefined, options.withCredentials);
+    axiosInstance = createAxiosInstance(undefined, false);
   }
 
   options.headers = { 'Content-Type': 'application/json', ...options.headers };
