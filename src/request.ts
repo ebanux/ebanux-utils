@@ -65,7 +65,7 @@ function abortSignal(timeout: number) {
 export function request(options: AxiosRequestConfig): Promise<any> {
   let axiosInstance;
 
-  options.timeout ??= session.requestTimeout;
+  options.timeout ??= session.apiRequestTimeout;
   options.signal ??= options.timeout !== undefined ? abortSignal(options.timeout) : undefined;
   options.withCredentials ??= session.isAuthenticated;
 
