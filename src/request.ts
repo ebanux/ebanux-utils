@@ -55,7 +55,7 @@ export function toQueryParams(requestData: any): string {
 }
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
-export function request(options: AxiosRequestConfig = {}): Promise<any> {
+export function request(options: AxiosRequestConfig): Promise<any> {
   let axiosInstance;
 
   if (options.withCredentials === undefined) {
