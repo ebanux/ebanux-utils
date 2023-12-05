@@ -43,6 +43,12 @@ class Session {
     return this.get('API_BASE_PATH', defaultValue);
   }
 
+  get requestTimeout(): number {
+    const defaultValue = process.env.REQUEST_TIMEOUT
+      || process.env.REACT_APP_REQUEST_TIMEOUT;
+    return this.get('REQUEST_TIMEOUT', defaultValue ? parseInt(defaultValue, 10) : undefined);
+  }
+
   get oauthTokenUrl(): string {
     const defaultValue = process.env.OAUTH_TOKEN_URL
       || process.env.REACT_APP_OAUTH_TOKEN_URL
@@ -113,6 +119,10 @@ class Session {
   set apiBasePath(value: string) {
     this.axiosInstance = null;
     this.set('API_BASE_PATH', value);
+  }
+
+  set requestTimeout(value: number) {
+    this.set('REQUEST_TIMEOUT', value);
   }
 
   set oauthTokenUrl(value: string) {

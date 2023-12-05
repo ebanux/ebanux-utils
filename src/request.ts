@@ -54,9 +54,20 @@ export function toQueryParams(requestData: any): string {
   return buildParams('', requestData).join('&');
 }
 
+function abortSignal(timeout: number) {
+  const abortController = new AbortController();
+  setTimeout(() => abortController.abort(), timeout || 0);
+
+  return abortController.signal;
+}
+
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export function request(options: AxiosRequestConfig): Promise<any> {
   let axiosInstance;
+
+  options.timeout ??= session.requestTimeout;
+  options.signal ??= options.timeout !== undefined ? abortSignal(options.timeout) : undefined;
+  options.withCredentials ??= session.isAuthenticated;
 
   if (options.withCredentials === undefined) {
     axiosInstance = session.axiosInstance || createAxiosInstance();
