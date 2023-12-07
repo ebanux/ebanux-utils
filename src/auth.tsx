@@ -30,6 +30,7 @@ export function getOrRefreshToken(): Promise<any> {
     }).catch((err) => {
       session.del('credentials');
       session.del('user');
+      cookies.del('user');
       const message = err.response ? err.response.data.message : err.message;
       throw Error(message);
     });

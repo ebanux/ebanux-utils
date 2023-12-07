@@ -62,13 +62,13 @@ function abortSignal(timeout: number) {
 }
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
-export function request(options: AxiosRequestConfig): Promise<any> {
+export function request(options: AxiosRequestConfig, ): Promise<any> {
   let axiosInstance;
 
   options.timeout ??= session.apiRequestTimeout;
   options.signal ??= options.timeout !== undefined ? abortSignal(options.timeout) : undefined;
 
-  if (session.isAuthenticated && options.withCredentials !== false) {
+  if (options.withCredentials !== false) {
     axiosInstance = session.axiosInstance || createAxiosInstance();
     session.axiosInstance = axiosInstance;
   } else {
