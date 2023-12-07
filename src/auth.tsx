@@ -84,6 +84,8 @@ export function signOut() {
   };
 
   session.clear();
+  cookies.del('user');
+
   window.location.href = `${signOutUrl}?${toQueryParams(data)}`;
 }
 
